@@ -11,7 +11,10 @@ public class Custom2DCharacterMovement : MonoBehaviour
     private Animator anim;
     private string Direction = "";
     private SpriteRenderer SR;
-    public List<GameObject> CollisionList;
+    public List<GameObject> CollisionGOList;
+    public List<Collision2D> CollisionList;
+    public int ListSize;
+    public bool Grounded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,24 +23,26 @@ public class Custom2DCharacterMovement : MonoBehaviour
         SR = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
-        CollisionList = new List<GameObject>();
+        CollisionGOList = new List<GameObject>();
+        CollisionList = new List<Collision2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        ListSize = CollisionList.Count;
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetKey("d"))
+        if (Input.GetKey("d") && CanGoLeftOrRight("Right") && rb.velocity.x < 7)
         {
+            Direction = "Right";
             SR.flipX = false;
             anim.SetBool("IsRunning", true);
+            //IgnoreFrictionLeftOrRight(Direction);
             rb.AddForce(new Vector2(SpeedMovementHorizontal, 0) * Time.fixedDeltaTime * 100);
-            Direction = "Right";
-        } else if (Input.GetKey("q"))
+        } else if (Input.GetKey("q") && CanGoLeftOrRight("Left") && rb.velocity.x > -7)
         {
             SR.flipX = true;
             anim.SetBool("IsRunning", true);
@@ -52,29 +57,74 @@ public class Custom2DCharacterMovement : MonoBehaviour
             anim.SetBool("IsRunning", false);
             SR.flipX = true;
         }
-        if (Input.GetKey("z") && IsGrounded())
+        if (Input.GetKeyDown("z") && Grounded || Input.GetKeyDown("space") && Grounded)
         {
+            Grounded = false;
             rb.AddForce(new Vector2(0, SpeedMovementVertical) * Time.fixedDeltaTime * 1000);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        CollisionList.Add(collision.gameObject);
+        Debug.Log(collision.contacts[0].normal);
+        CollisionList.Add(collision);
+        if (collision.contacts[0].normal.y >= 0 && collision.gameObject.tag == "Ground")
+        {
+            Grounded = true;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        CollisionList.Remove(collision.gameObject);
-
+        Collision2D colTemp = new Collision2D();
+        foreach (Collision2D elt in CollisionList)
+        {
+            if (elt.gameObject.name == collision.gameObject.name)
+                colTemp = elt;
+        }
+        CollisionList.Remove(colTemp);
     }
 
-    private bool IsGrounded()
+    private bool CanGoLeftOrRight(string Dir)
     {
-        foreach (GameObject CollisionGO in CollisionList)
+        if (Dir == "Right")
         {
-            if (CollisionGO.tag == "Ground" && )
-                return true;
+            foreach (Collision2D elt in CollisionList)
+            {
+                if (elt.contacts[0].normal.x < -0.71)
+                    return false;
+            }
+        }
+        if (Dir == "Left")
+        {
+            foreach (Collision2D elt in CollisionList)
+            {
+                if (elt.contacts[0].normal.x > 0.71)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    private bool IgnoreFrictionLeftOrRight(string Dir)
+    {
+        if (Dir == "Right")
+        {
+            foreach (Collision2D elt in CollisionList)
+            {
+                if (elt.contacts[0].normal.y > 0)
+                    //gameObject.GetComponent<BoxCollider2D>().friction = 0;
+                    return true;
+            }
+        }
+        if (Dir == "Left")
+        {
+            foreach (Collision2D elt in CollisionList)
+            {
+                if (elt.contacts[0].normal.y > 0)
+                    //rb.GetComponent<PhysicsMaterial2D>().friction = 0;
+                    return true;
+            }
         }
         return false;
     }
