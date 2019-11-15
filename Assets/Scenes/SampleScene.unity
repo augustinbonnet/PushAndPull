@@ -107,8 +107,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 45
-    agentClimb: 0.4
+    agentSlope: 60
+    agentClimb: 0.6
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -987,7 +987,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 22820937}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: fbc6ae33c103a8545af74e12102e21b2, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3125,7 +3125,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.32, y: 1.42}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -3147,7 +3147,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 6200000, guid: 6f6279409b3cb104ca628d92039d1f67, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -3161,22 +3161,22 @@ BoxCollider2D:
   m_GameObject: {fileID: 8748655848741901442}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6f6279409b3cb104ca628d92039d1f67, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.122611046, y: 0.34821582}
+  m_Offset: {x: -0.020622253, y: 0.24393976}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.31, y: 1.48}
+    newSize: {x: 1.32, y: 1.42}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1471329, y: 0.7155423}
+  m_Size: {x: 1.1396465, y: 0.70158696}
   m_EdgeRadius: 0
 --- !u!95 &2075123079
 Animator:
@@ -4044,9 +4044,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.1275158, y: -0.11280227}
+  m_Offset: {x: -0.022791386, y: -0.11280227}
   serializedVersion: 2
-  m_Radius: 0.5833757
+  m_Radius: 0.5808673
 --- !u!114 &8748655848741901444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4060,7 +4060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_JumpForce: 500
-  m_CrouchSpeed: 0.36
+  m_CrouchSpeed: 0.4
   m_MovementSmoothing: 0.05
   m_AirControl: 1
   m_WhatIsGround:
